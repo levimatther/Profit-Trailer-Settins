@@ -1,0 +1,170 @@
+# -----------------------------------------------------------------
+#                      CRYPTOGNOMES LOW BALANCE SETTINGS
+# -----------------------------------------------------------------
+# Only buy coins if the buy cost will not let your balance go below specified amount
+# Note: You also still need to set this value in Pairs.properties if you always want
+# some balance left. If you want to use a percentage of your balance then leave this
+# as zero.
+#
+DCA_keep_balance = 0
+#
+# Only buy coins if the buy cost will not let your balance go below specified amount in %
+# Example: To always leave 60% of my account untouched. set value to 60%
+# Note: This property only works if DEFAULT_keepbalance = 0
+# If DCA is enabled you also still need to set this value in Pairs.properties
+# if you always want some balance left.
+# DCA is a method for averaging down the price of a losing trade,
+DCA_keep_balance_percentage = 0
+#
+# For a more in-depth explanation see here:
+# -----------------------------------------------------------------
+#           Dollar Cost Averaging (Martingale) settings
+# -----------------------------------------------------------------
+#
+# hoping the price will come up to your lower average buy price.
+#      http://forexop.com/martingale-trading-system-overview
+#
+#
+# Define the TOTAL amount a single pair is allowed to cost you when using DCA.
+#
+# Note: use this setting carefully!
+# If set to 0 this option is ignored and there is no max cost.
+# The bot will keep using DCA until you run out of balance
+#
+# Example: you set max_cost = 0.01 and you bought 0.005 BTC.
+# Because max_cost is 0.01 you are allowed to double up 1 time.
+# -------------------------------------  WARNING -------------------------------------
+#
+# Using the Martingale strategy your trade exposure on a losing sequence increases exponentially.
+# Remember that each time ANDEERSON DCA makes a buy it will double your current quantity of that pair.
+# That means it has the potential to use your entire trading budget, therefore, you MUST consider using a low
+# DEFAULT_DCA_max_cost.
+#
+# We also need to avoid the Taleb dilema https://en.wikipedia.org/wiki/Taleb_distribution
+# which states the greater your drawdown limit, the lower your probability of making a loss ? but the bigger that loss will be.
+# So we therefore have put other protection mechanisms throughout the settings to ensure we pick good pairs and minimise loss.
+# None of these can guarantee that you will be safe so heed this warning and adjust the below value to suit your trading style.
+# Set the percentage of TCV purchased when making a DCA buy.
+# Set to 100 to double down each level. This can be overriden on a per
+DEFAULT_DCA_max_cost = 0.075
+#DEFAULT_DCA_buy_percentage = 100
+# Define max amount of times DCA is allowed to buy a pair.
+# If set to 0 this option is ignored and there is no limit to amount of times DCA buys.
+# Only purchase a pair if the 24 hour percentage change is below the max price increase.
+# Note: use this setting carefully!
+# Remember that DCA effectively DOUBLES the amount of holding for the coin each
+# This prevents partial buys that might disturb the DCA strategy.
+DEFAULT_DCA_max_buy_times = 5
+# 150% means there shoud be 150% of the amount we wanna buy in the orderbook to
+# Set the loss percentage required before a DCA buy can take place.
+# All configured buy strategies must be true and you must have lost at least this amount.
+#
+#DEFAULT_DCA_min_buy_volume = 100
+#
+# -----------------------------------------------------------------
+#                        DCA Buy Strategies
+# -----------------------------------------------------------------
+# 1 is conservative.
+# DCA Trigger level.
+# after it was last DCA'ed.
+# if exceeded then create a pending order for that pair
+# Only purchase a pair if the 24 hour percentage change is above the min price increase.
+#
+DEFAULT_DCA_buy_min_change_percentage = 0
+# -----------------------------------------------------------------
+#
+DEFAULT_DCA_buy_max_change_percentage = 10
+# Ensure we do True Dollar Cost Averaging (Martingale) by buying the same number
+# Allow DCA to buy if there's enough volume in order book to fill the order.
+# 100% means there should be at least the amount we wanna buy in the orderbook.
+# issue the buy order. So if you need 5 coins at price A orderbook should have
+# at least 7.5 coins at price A or lower
+# in the Profit % column. This gives you a more realistic representation of your position.
+DEFAULT_DCA_min_orderbook_volume_percentage = 100
+# strategies being true. Set to zero to disable this.
+# Max spread % between lowest ask and highest bid to allow a new buy order.
+# If spread is too big, most likely there was a coin dump/pump and you are
+# buying too high.
+#
+# 2 is mildly conservative.
+# 3 would be very aggressive.
+# is monitored for the deviation and the wait_time starts again. Set to 0 to reset the wait_time
+DEFAULT_DCA_max_buy_spread = 1
+#
+# The timeout period (in minutes) that the bot is not allowed to buy a coin
+# Purchase the same number of coins at each DCA level effectively doubling down.
+DEFAULT_DCA_rebuy_timeout = 10
+#                        DCA Sell Strategies
+# The time period (in minutes) that has passed since we bought a particular pair,
+# If set to true, Profit Trailer will look at the highest bid order with enough
+DEFAULT_DCA_pending_order_wait_time = 0
+# Sell the trading pair if profit reaches the set percentage regardless of all sell
+# Set this value to true to allow DCA to continue buying even if no new buys are allowed
+# as the bot is in Sell Only Mode. This is often used when you want the bot to stop buying
+# new coins, but continue to DCA and attempt to get rid of existing coins.
+#DEFAULT_DCA_take_profit_wait_time = 0
+DEFAULT_DCA_ignore_sell_only_mode = true
+# not sold for xx minutes, defined on the line above this. Set to zero to disable this.
+#                       Buy Settings
+# -----------------------------------------------------------------
+# every time the price changes.
+DEFAULT_DCA_A_buy_value = 55
+DEFAULT_DCA_A_buy_value_limit = 0
+
+# Trailing should take us the rest of the way to the bottom of the Trade Cycle
+
+DEFAULT_DCA_trailing_buy = 0
+
+
+# of coins each time and keeping our purchases as a multiple of our initial cost.
+
+# Sets the per trigger level percentage of TCV to purchase when making a DCA buy.
+
+
+
+
+# -----------------------------------------------------------------
+# -----------------------------------------------------------------
+DEFAULT_DCA_A_sell_strategy = GAIN
+DEFAULT_DCA_A_sell_value = 0.7
+
+DEFAULT_DCA_trailing_profit = 0.025
+DEFAULT_DCA_max_profit = 0
+
+
+# volume rather than just the highest bid order. Both percentages will be displayed
+
+DCA_orderbook_profit_calculation = true
+
+#
+
+
+
+# New in 2.x, the time period to wait define in munutes while the profit percentage remains
+# above xx percent, defined on the line below this, but has not yet sold. Set to zero to disable this.
+
+
+# New in 2.x, the profit percentage above which the bot will attempt to sell a pair if it has
+DEFAULT_DCA_take_profit_percentage = 0
+
+
+# New in 2.x, the percentage of price deviation allowed from the DEFAULT_take_profit_percentage
+# before resetting the DEFAULT_take_profit_wait_time. If the deviation is exceeded the new price
+DEFAULT_DCA_take_profit_reset_percentage_move = 0
+
+
+# Stop loss triggers
+
+DEFAULT_DCA_stop_loss_trigger = 4
+DEFAULT_DCA_stop_loss_timeout = 45
+default_dca_b_buy_value = 0.000000001
+default_dca_b_buy_value_limit = 1
+default_dca_trailing_profit_type = GROW
+default_dca_buy_percentage_1 = 100
+default_dca_buy_percentage_2 = 100
+default_dca_buy_percentage_3 = 100
+default_dca_buy_percentage_4 = 100
+default_dca_buy_percentage_5 = 100
+default_dca_buy_trigger = -0.5
+default_dca_a_buy_strategy = RSI
+default_dca_b_buy_strategy = MACD
